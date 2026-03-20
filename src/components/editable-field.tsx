@@ -139,13 +139,13 @@ function renderEditable(
     case "select":
       return (
         <Select value={(value as string) || ""} onValueChange={(v) => onChange(name, v)}>
-          <SelectTrigger className="h-7 text-[13px]">
-            <SelectValue placeholder="Selectează..." />
+          <SelectTrigger className="h-7 text-[13px] w-full overflow-hidden">
+            <span className="truncate block">{(value as string) || "Selectează..."}</span>
           </SelectTrigger>
-          <SelectContent className="max-w-[400px] z-50">
+          <SelectContent className="max-h-[300px] z-[100]" sideOffset={4}>
             {(options || []).map((opt) => (
-              <SelectItem key={opt} value={opt} className="text-[13px]">
-                <span className="truncate block max-w-[360px]">{opt}</span>
+              <SelectItem key={opt} value={opt} className="text-[13px] max-w-[350px]">
+                <span className="line-clamp-2">{opt}</span>
               </SelectItem>
             ))}
           </SelectContent>
