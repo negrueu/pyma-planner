@@ -3,6 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Header() {
   const { data: session } = useSession();
@@ -31,10 +32,11 @@ export function Header() {
             </Link>
           </nav>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <span className="text-xs text-muted-foreground hidden sm:inline">
             {session.user?.name}
           </span>
+          <ThemeToggle />
           <Button
             variant="ghost"
             size="sm"

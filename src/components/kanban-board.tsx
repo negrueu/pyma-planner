@@ -2,8 +2,9 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import type { EventSummary } from "@/lib/notion";
+import { NotionBadge } from "@/components/notion-badge";
+import { salonStyles, kanbanPhaseColors } from "@/lib/notion-colors";
 
 const phases = [
   "Cerere nouă",
@@ -12,20 +13,6 @@ const phases = [
   "În planificare",
   "Pre-eveniment",
 ];
-
-const phaseColors: Record<string, string> = {
-  "Cerere nouă": "border-t-yellow-500",
-  "Ofertă trimisă": "border-t-orange-500",
-  "Contract semnat": "border-t-blue-500",
-  "În planificare": "border-t-purple-500",
-  "Pre-eveniment": "border-t-green-500",
-};
-
-const salonColors: Record<string, string> = {
-  BallRoom: "bg-amber-500/20 text-amber-400",
-  Imperial: "bg-indigo-500/20 text-indigo-400",
-  Glamour: "bg-rose-500/20 text-rose-400",
-};
 
 function formatDate(date: string | null): string {
   if (!date) return "—";
@@ -44,7 +31,6 @@ export function KanbanBoard({ events }: { events: EventSummary[] }) {
         cols[phase].push(event);
       }
     }
-    // Sort each column by date
     for (const phase of phases) {
       cols[phase].sort((a, b) => {
         if (!a.date) return 1;
@@ -56,37 +42,40 @@ export function KanbanBoard({ events }: { events: EventSummary[] }) {
   }, [events]);
 
   return (
-    <div className="flex gap-4 overflow-x-auto pb-4">
+    <div className="flex gap-3 overflow-x-auto pb-4">
       {phases.map((phase) => (
         <div
           key={phase}
-          className={`flex-shrink-0 w-64 bg-muted/30 rounded-md border border-border border-t-2 ${phaseColors[phase]}`}
+          className="flex-shrink-0 w-64 bg-muted/30 rounded border border-border"
+          style={{ borderTopWidth: 2, borderTopColor: kanbanPhaseColors[phase] }}
         >
-          <div className="p-3 flex items-center justify-between">
-            <span className="text-sm font-medium">{phase}</span>
-            <Badge variant="secondary" className="text-xs">
+          <div className="px-3 py-2 flex items-center justify-between">
+            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+              {phase}
+            </span>
+            <span className="text-xs text-muted-foreground tabular-nums bg-muted px-1.5 py-0.5 rounded">
               {columns[phase].length}
-            </Badge>
+            </span>
           </div>
-          <div className="px-2 pb-2 space-y-2 max-h-[calc(100vh-220px)] overflow-y-auto">
+          <div className="px-2 pb-2 space-y-1.5 max-h-[calc(100vh-220px)] overflow-y-auto">
             {columns[phase].map((event) => (
               <Link
                 key={event.id}
                 href={`/event/${event.id}`}
-                className="block p-3 rounded-md bg-card border border-border hover:bg-accent/50 transition-colors"
+                className="block p-2.5 rounded border border-border bg-card hover:bg-accent/50 transition-colors"
               >
-                <p className="text-sm font-medium truncate">{event.name || "—"}</p>
-                <div className="flex items-center justify-between mt-2">
+                <p className="text-sm truncate">{event.name || "—"}</p>
+                <div className="flex items-center justify-between mt-1.5">
                   <span className="text-xs text-muted-foreground">
                     {formatDate(event.date)}
                   </span>
                   <div className="flex items-center gap-1">
                     {event.salon && (
-                      <Badge variant="secondary" className={`text-[10px] ${salonColors[event.salon] || ""}`}>
+                      <NotionBadge style={salonStyles[event.salon]}>
                         {event.salon}
-                      </Badge>
+                      </NotionBadge>
                     )}
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-muted-foreground tabular-nums">
                       {event.estPersons ?? "?"}p
                     </span>
                   </div>

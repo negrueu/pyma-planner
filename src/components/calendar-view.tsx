@@ -71,7 +71,7 @@ export function CalendarView({ events }: { events: EventSummary[] }) {
         ))}
       </div>
 
-      <div className="bg-card border border-border rounded-md p-2 calendar-dark" style={{ height: 650 }}>
+      <div className="bg-card border border-border rounded-md p-2 calendar-notion" style={{ height: 650 }}>
         <Calendar
           localizer={localizer}
           events={calendarEvents}

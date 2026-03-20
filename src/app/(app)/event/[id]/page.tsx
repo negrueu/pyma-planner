@@ -1,6 +1,7 @@
 import { getEventById, extract } from "@/lib/notion";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { NotionBadge } from "@/components/notion-badge";
+import { eventTypeStyles, salonStyles, phaseStyles } from "@/lib/notion-colors";
 import { TabClient } from "./tab-client";
 import { TabContract } from "./tab-contract";
 import { TabMenu } from "./tab-menu";
@@ -9,31 +10,6 @@ import { TabFinancial } from "./tab-financial";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
-
-const eventColors: Record<string, string> = {
-  NUNTA: "bg-blue-500/20 text-blue-400",
-  Botez: "bg-pink-500/20 text-pink-400",
-  Aniversare: "bg-green-500/20 text-green-400",
-  Corporate: "bg-zinc-500/20 text-zinc-400",
-  Cumătrie: "bg-orange-500/20 text-orange-400",
-  Majorat: "bg-purple-500/20 text-purple-400",
-};
-
-const salonColors: Record<string, string> = {
-  BallRoom: "bg-amber-500/20 text-amber-400",
-  Imperial: "bg-indigo-500/20 text-indigo-400",
-  Glamour: "bg-rose-500/20 text-rose-400",
-};
-
-const phaseColors: Record<string, string> = {
-  "Cerere nouă": "bg-yellow-500/20 text-yellow-400",
-  "Ofertă trimisă": "bg-orange-500/20 text-orange-400",
-  "Contract semnat": "bg-blue-500/20 text-blue-400",
-  "În planificare": "bg-purple-500/20 text-purple-400",
-  "Pre-eveniment": "bg-green-500/20 text-green-400",
-  Finalizat: "bg-zinc-500/20 text-zinc-400",
-  Anulat: "bg-red-500/20 text-red-400",
-};
 
 export default async function EventPage({
   params,
@@ -61,11 +37,11 @@ export default async function EventPage({
     : "—";
 
   return (
-    <div className="p-6 max-w-5xl mx-auto space-y-6">
+    <div className="p-6 max-w-5xl mx-auto space-y-5">
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Link href="/" className="hover:text-foreground">Dashboard</Link>
-        <span>/</span>
-        <span>{name}</span>
+        <Link href="/" className="hover:text-foreground transition-colors">Dashboard</Link>
+        <span className="text-muted-foreground/50">/</span>
+        <span className="text-foreground">{name}</span>
       </div>
 
       <div className="space-y-2">
@@ -75,25 +51,19 @@ export default async function EventPage({
         </h1>
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-sm text-muted-foreground">{displayDate}</span>
-          {salon && (
-            <Badge variant="secondary" className={salonColors[salon] || ""}>{salon}</Badge>
-          )}
-          {eventType && (
-            <Badge variant="secondary" className={eventColors[eventType] || ""}>{eventType}</Badge>
-          )}
-          {phase && (
-            <Badge variant="secondary" className={phaseColors[phase] || ""}>{phase}</Badge>
-          )}
+          {salon && <NotionBadge style={salonStyles[salon]}>{salon}</NotionBadge>}
+          {eventType && <NotionBadge style={eventTypeStyles[eventType]}>{eventType}</NotionBadge>}
+          {phase && <NotionBadge style={phaseStyles[phase]}>{phase}</NotionBadge>}
         </div>
       </div>
 
       <Tabs defaultValue="client" className="space-y-4">
-        <TabsList className="bg-muted/50">
-          <TabsTrigger value="client">Date client</TabsTrigger>
-          <TabsTrigger value="contract">Ofertă & Contract</TabsTrigger>
-          <TabsTrigger value="menu">Meniu & Staff</TabsTrigger>
-          <TabsTrigger value="execution">Execuție</TabsTrigger>
-          <TabsTrigger value="financial">Financiar</TabsTrigger>
+        <TabsList className="bg-muted/50 h-9">
+          <TabsTrigger value="client" className="text-xs">Date client</TabsTrigger>
+          <TabsTrigger value="contract" className="text-xs">Ofertă & Contract</TabsTrigger>
+          <TabsTrigger value="menu" className="text-xs">Meniu & Staff</TabsTrigger>
+          <TabsTrigger value="execution" className="text-xs">Execuție</TabsTrigger>
+          <TabsTrigger value="financial" className="text-xs">Financiar</TabsTrigger>
         </TabsList>
 
         <TabsContent value="client">
