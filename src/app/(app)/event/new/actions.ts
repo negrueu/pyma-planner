@@ -1,6 +1,9 @@
 "use server";
 
 import { createEvent } from "@/lib/notion";
+import { logAudit } from "@/lib/supabase";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 
 type NewEventForm = {
@@ -48,6 +51,19 @@ export async function createNewEvent(
     }
 
     const result = await createEvent(properties);
+
+    // Audit log
+    const session = await getServerSession(authOptions);
+    if (session?.user?.email) {
+      logAudit({
+        user_email: session.user.email,
+        user_name: session.user.name || "",
+        action: "create_event",
+        event_id: result.id,
+        event_name: form.name,
+        details: { salon: form.salon, eventType: form.eventType, date: form.date },
+      });
+    }
 
     revalidatePath("/");
     revalidatePath("/search");

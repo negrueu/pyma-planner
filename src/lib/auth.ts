@@ -1,6 +1,7 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { logAudit } from "@/lib/supabase";
 
 const users = [
   {
@@ -55,6 +56,27 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 zile
+  },
+  events: {
+    async signIn({ user }) {
+      if (user?.email) {
+        logAudit({
+          user_email: user.email,
+          user_name: user.name || "",
+          action: "login",
+          details: { method: "credentials" },
+        });
+      }
+    },
+    async signOut({ token }) {
+      if (token?.email) {
+        logAudit({
+          user_email: token.email as string,
+          user_name: (token.name as string) || "",
+          action: "logout",
+        });
+      }
+    },
   },
   callbacks: {
     async jwt({ token, user }) {

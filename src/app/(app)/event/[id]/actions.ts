@@ -1,6 +1,9 @@
 "use server";
 
 import { updateEvent, getLastEditedTime } from "@/lib/notion";
+import { logAudit } from "@/lib/supabase";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 
 export type UpdateResult = {
@@ -80,6 +83,19 @@ export async function updateEventFields(
     }
 
     await updateEvent(pageId, properties);
+
+    // Audit log
+    const session = await getServerSession(authOptions);
+    if (session?.user?.email) {
+      logAudit({
+        user_email: session.user.email,
+        user_name: session.user.name || "",
+        action: "edit_event",
+        event_id: pageId,
+        details: { changed_fields: Object.keys(fields) },
+      });
+    }
+
     revalidatePath(`/event/${pageId}`);
     revalidatePath("/");
     revalidatePath("/search");

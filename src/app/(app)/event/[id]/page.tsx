@@ -1,4 +1,7 @@
 import { getEventById, extract } from "@/lib/notion";
+import { logAudit } from "@/lib/supabase";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { NotionBadge } from "@/components/notion-badge";
 import { eventTypeStyles, salonStyles, phaseStyles } from "@/lib/notion-colors";
@@ -17,8 +20,23 @@ export default async function EventPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const event = await getEventById(id);
+  const [event, session] = await Promise.all([
+    getEventById(id),
+    getServerSession(authOptions),
+  ]);
   const p = event.properties;
+
+  // Log view
+  const name1 = extract.title(p["Nume 1"]);
+  if (session?.user?.email) {
+    logAudit({
+      user_email: session.user.email,
+      user_name: session.user.name || "",
+      action: "view_event",
+      event_id: id,
+      event_name: name1,
+    });
+  }
 
   const name = extract.title(p["Nume 1"]);
   const name2 = extract.richText(p["Nume 2 "]);
