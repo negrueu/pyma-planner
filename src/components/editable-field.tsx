@@ -106,7 +106,7 @@ function renderEditable(
         <Input
           value={(value as string) || ""}
           onChange={(e) => onChange(name, e.target.value)}
-          className="h-8 text-sm"
+          className="h-7 text-[13px]"
         />
       );
     case "rich_text":
@@ -114,7 +114,7 @@ function renderEditable(
         <Textarea
           value={(value as string) || ""}
           onChange={(e) => onChange(name, e.target.value)}
-          className="text-sm min-h-[60px]"
+          className="text-[13px] min-h-[50px]"
           rows={2}
         />
       );
@@ -124,7 +124,7 @@ function renderEditable(
           type="number"
           value={value === null || value === undefined ? "" : String(value)}
           onChange={(e) => onChange(name, e.target.value === "" ? null : Number(e.target.value))}
-          className="h-8 text-sm tabular-nums"
+          className="h-7 text-[13px] tabular-nums"
         />
       );
     case "date":
@@ -133,18 +133,20 @@ function renderEditable(
           type="date"
           value={(value as string) || ""}
           onChange={(e) => onChange(name, e.target.value)}
-          className="h-8 text-sm"
+          className="h-7 text-[13px]"
         />
       );
     case "select":
       return (
         <Select value={(value as string) || ""} onValueChange={(v) => onChange(name, v)}>
-          <SelectTrigger className="h-8 text-sm">
+          <SelectTrigger className="h-7 text-[13px]">
             <SelectValue placeholder="Selectează..." />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="max-w-[400px] z-50">
             {(options || []).map((opt) => (
-              <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+              <SelectItem key={opt} value={opt} className="text-[13px]">
+                <span className="truncate block max-w-[360px]">{opt}</span>
+              </SelectItem>
             ))}
           </SelectContent>
         </Select>
@@ -157,13 +159,12 @@ function renderEditable(
         />
       );
     case "multi_select":
-      // Simple comma-separated input for now
       return (
         <Input
           value={(value as string[])?.join(", ") || ""}
           onChange={(e) => onChange(name, e.target.value.split(",").map((s) => s.trim()).filter(Boolean))}
           placeholder="Valori separate prin virgulă"
-          className="h-8 text-sm"
+          className="h-7 text-[13px]"
         />
       );
     default:
