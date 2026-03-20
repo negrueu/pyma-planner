@@ -120,7 +120,7 @@ export function EditableTab({ eventId, lastEditedTime, properties, fields, rende
           </>
         )}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 [&>*]:min-w-0">
         {fields.map((field) =>
           renderField(
             field,

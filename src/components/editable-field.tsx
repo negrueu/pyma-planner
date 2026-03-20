@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
+import { NotionBadge } from "@/components/notion-badge";
 import { extract } from "@/lib/notion";
 
 type FieldProps = {
@@ -61,13 +61,13 @@ function renderReadonly(prop: any, type: string): React.ReactNode {
     case "rich_text": return extract.richText(prop) || dash();
     case "select": {
       const v = extract.select(prop);
-      return v ? <Badge variant="secondary">{v}</Badge> : dash();
+      return v ? <span className="text-[14px] break-words">{v}</span> : dash();
     }
     case "multi_select": {
       const vals = extract.multiSelect(prop);
       return vals.length > 0 ? (
         <div className="flex flex-wrap gap-1">
-          {vals.map((v) => <Badge key={v} variant="secondary" className="text-xs">{v}</Badge>)}
+          {vals.map((v) => <NotionBadge key={v}>{v}</NotionBadge>)}
         </div>
       ) : dash();
     }
