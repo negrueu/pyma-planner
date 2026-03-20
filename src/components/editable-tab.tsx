@@ -103,24 +103,33 @@ export function EditableTab({ eventId, lastEditedTime, properties, fields, rende
   }
 
   return (
-    <div className="border border-border rounded-md bg-card">
+    <div>
       <div className="flex items-center justify-end gap-2 py-2">
         {!editing ? (
-          <Button variant="ghost" size="sm" onClick={() => setEditing(true)} className="text-[13px] h-7">
+          <button
+            onClick={() => setEditing(true)}
+            className="text-[13px] px-3 py-1 rounded-[4px] font-medium transition-colors"
+            style={{ backgroundColor: "var(--color-notion-green)", color: "var(--color-notion-green-text)" }}
+          >
             Editează
-          </Button>
+          </button>
         ) : (
           <>
             <Button variant="ghost" size="sm" onClick={handleCancel} disabled={saving} className="text-[13px] h-7">
               Anulează
             </Button>
-            <Button size="sm" onClick={handleSave} disabled={saving} className="text-[13px] h-7">
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="text-[13px] px-3 py-1 rounded-[4px] font-medium transition-colors disabled:opacity-50"
+              style={{ backgroundColor: "#2EAADC", color: "#FFFFFF" }}
+            >
               {saving ? "Salvează..." : "Salvează"}
-            </Button>
+            </button>
           </>
         )}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 [&>*]:min-w-0">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-0 [&>*]:min-w-0 [&>*]:py-[10px] [&>*]:border-b [&>*]:border-border">
         {fields.map((field) =>
           renderField(
             field,

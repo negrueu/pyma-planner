@@ -3,7 +3,7 @@ import { FieldDisplay, FieldGrid, SectionTitle } from "@/components/field-displa
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function TabFinancial({ properties: p }: { properties: any }) {
   return (
-    <div className="border border-border rounded-md bg-card">
+    <div>
       <SectionTitle>Rezumat financiar</SectionTitle>
       <FieldGrid>
         <FieldDisplay label="Total" value={p["Total"]} type="formula" />

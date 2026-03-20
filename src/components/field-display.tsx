@@ -86,7 +86,7 @@ function dash() {
 
 export function FieldGrid({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 py-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-0 [&>*]:min-w-0 [&>*]:py-[10px] [&>*]:border-b [&>*]:border-border">
       {children}
     </div>
   );
