@@ -2,25 +2,24 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
-// Placeholder users — replace emails and passwords before go-live
 const users = [
   {
     id: "1",
     name: "Paul Pădurariu",
-    email: "paul@placeholder.com",
-    passwordHash: bcrypt.hashSync("changeme1", 10),
+    email: "pymagroup@gmail.com",
+    passwordHash: "$2b$12$lTmIeecRTyGZSxgAonCGCOc7fX11DZoS1PYnEdSsdPBaUm2x4Npc6",
   },
   {
     id: "2",
     name: "Elena Pădurariu",
-    email: "elena@placeholder.com",
-    passwordHash: bcrypt.hashSync("changeme2", 10),
+    email: "elenapadurariu@gmail.com",
+    passwordHash: "$2b$12$PWsJuUlK1BaTpOePOG8VmOXUomM.lKpddIYKfbukvBPKEpsctJ.SS",
   },
   {
     id: "3",
-    name: "Mădălina Dianu",
-    email: "madalina@placeholder.com",
-    passwordHash: bcrypt.hashSync("changeme3", 10),
+    name: "Marian Negru",
+    email: "nm.negru@gmail.com",
+    passwordHash: "$2b$12$kGVRlQwATi6qogDN3yWRGeJH63ahdFBO8PUgUPsCD38eT2a9g7xAW",
   },
 ];
 
