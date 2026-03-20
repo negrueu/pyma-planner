@@ -37,16 +37,16 @@ export function EditableField({
 }: FieldProps) {
   if (!editing) {
     return (
-      <div className="space-y-1">
-        <p className="text-xs text-muted-foreground">{label}</p>
-        <div className="text-sm min-h-[20px]">{renderReadonly(notionValue, type)}</div>
+      <div>
+        <p className="text-[12px] text-muted-foreground mb-[2px]">{label}</p>
+        <div className="text-[14px] min-h-[20px]">{renderReadonly(notionValue, type)}</div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-1">
-      <p className="text-xs text-muted-foreground">{label}</p>
+    <div>
+      <p className="text-[12px] text-muted-foreground mb-[2px]">{label}</p>
       {renderEditable(name, type, value, onChange, options)}
     </div>
   );

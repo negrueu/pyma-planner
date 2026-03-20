@@ -6,11 +6,11 @@ type Props = {
   className?: string;
 };
 
-// Notion-style tag/badge — uses inline styles for CSS variable colors
+// Notion-identical tag — small, compact, 3px radius
 export function NotionBadge({ children, style, className = "" }: Props) {
   return (
     <span
-      className={`inline-flex items-center px-1.5 py-0.5 rounded text-xs font-normal whitespace-nowrap ${className}`}
+      className={`inline-flex items-center px-[6px] py-[1px] rounded-[3px] text-[12px] leading-[18px] font-normal whitespace-nowrap ${className}`}
       style={style}
     >
       {children}

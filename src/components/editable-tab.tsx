@@ -104,23 +104,23 @@ export function EditableTab({ eventId, lastEditedTime, properties, fields, rende
 
   return (
     <div className="border border-border rounded-md bg-card">
-      <div className="flex items-center justify-end gap-2 px-4 py-2 border-b border-border">
+      <div className="flex items-center justify-end gap-2 py-2">
         {!editing ? (
-          <Button variant="ghost" size="sm" onClick={() => setEditing(true)}>
+          <Button variant="ghost" size="sm" onClick={() => setEditing(true)} className="text-[13px] h-7">
             Editează
           </Button>
         ) : (
           <>
-            <Button variant="ghost" size="sm" onClick={handleCancel} disabled={saving}>
+            <Button variant="ghost" size="sm" onClick={handleCancel} disabled={saving} className="text-[13px] h-7">
               Anulează
             </Button>
-            <Button size="sm" onClick={handleSave} disabled={saving}>
+            <Button size="sm" onClick={handleSave} disabled={saving} className="text-[13px] h-7">
               {saving ? "Salvează..." : "Salvează"}
             </Button>
           </>
         )}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3">
         {fields.map((field) =>
           renderField(
             field,

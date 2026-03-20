@@ -1,16 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-sans",
-  subsets: ["latin"],
-});
-
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
+  themeColor: "#191919",
 };
 
 export const metadata: Metadata = {
@@ -30,12 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="ro"
-      className={`${inter.variable} h-full antialiased`}
-      suppressHydrationWarning
-    >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+    <html lang="ro" suppressHydrationWarning>
+      <body className="min-h-screen bg-background text-foreground">
         <Providers>
           {children}
           <Toaster />

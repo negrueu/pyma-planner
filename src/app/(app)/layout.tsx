@@ -1,12 +1,12 @@
-import { Header } from "@/components/header";
-import { MobileNav } from "@/components/mobile-nav";
+import { Sidebar } from "@/components/sidebar";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <Header />
-      <main className="flex-1 pb-16 md:pb-0">{children}</main>
-      <MobileNav />
-    </>
+    <div className="min-h-screen">
+      <Sidebar />
+      <main className="md:pl-60 pb-14 md:pb-0 min-h-screen">
+        {children}
+      </main>
+    </div>
   );
 }

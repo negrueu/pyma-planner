@@ -8,9 +8,9 @@ export function FieldDisplay({ label, value, type }: Props) {
   const rendered = renderValue(value, type);
 
   return (
-    <div className="space-y-1">
-      <p className="text-xs text-muted-foreground">{label}</p>
-      <div className="text-sm min-h-[20px]">{rendered}</div>
+    <div>
+      <p className="text-[12px] text-muted-foreground mb-[2px]">{label}</p>
+      <div className="text-[14px] min-h-[20px]">{rendered}</div>
     </div>
   );
 }
@@ -86,7 +86,7 @@ function dash() {
 
 export function FieldGrid({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 py-3">
       {children}
     </div>
   );
@@ -94,7 +94,7 @@ export function FieldGrid({ children }: { children: React.ReactNode }) {
 
 export function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-sm font-medium text-muted-foreground px-4 pt-4 pb-1">
+    <h3 className="text-[13px] font-semibold text-muted-foreground pt-4 pb-1">
       {children}
     </h3>
   );

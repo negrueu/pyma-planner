@@ -34,53 +34,64 @@ export default async function EventPage({
         month: "long",
         year: "numeric",
       })
-    : "—";
+    : "";
 
   return (
-    <div className="p-6 max-w-5xl mx-auto space-y-5">
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+    <div className="max-w-[900px] mx-auto px-[96px] py-8">
+      <div className="text-[12px] text-muted-foreground mb-4">
         <Link href="/" className="hover:text-foreground transition-colors">Dashboard</Link>
-        <span className="text-muted-foreground/50">/</span>
+        <span className="mx-1">/</span>
         <span className="text-foreground">{name}</span>
       </div>
 
-      <div className="space-y-2">
-        <h1 className="text-2xl font-semibold">
-          {name}
-          {name2 && <span className="text-muted-foreground font-normal"> &amp; {name2}</span>}
-        </h1>
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm text-muted-foreground">{displayDate}</span>
-          {salon && <NotionBadge style={salonStyles[salon]}>{salon}</NotionBadge>}
-          {eventType && <NotionBadge style={eventTypeStyles[eventType]}>{eventType}</NotionBadge>}
-          {phase && <NotionBadge style={phaseStyles[phase]}>{phase}</NotionBadge>}
-        </div>
+      <h1 className="text-[40px] font-bold leading-[1.2] mb-1">
+        {name}
+        {name2 && <span className="text-muted-foreground font-normal"> &amp; {name2}</span>}
+      </h1>
+
+      <div className="flex flex-wrap items-center gap-[6px] mb-6 text-[14px] text-muted-foreground">
+        {displayDate && <span>{displayDate}</span>}
+        {salon && <NotionBadge style={salonStyles[salon]}>{salon}</NotionBadge>}
+        {eventType && <NotionBadge style={eventTypeStyles[eventType]}>{eventType}</NotionBadge>}
+        {phase && <NotionBadge style={phaseStyles[phase]}>{phase}</NotionBadge>}
       </div>
 
-      <Tabs defaultValue="client" className="space-y-4">
-        <TabsList className="bg-muted/50 h-9">
-          <TabsTrigger value="client" className="text-xs">Date client</TabsTrigger>
-          <TabsTrigger value="contract" className="text-xs">Ofertă & Contract</TabsTrigger>
-          <TabsTrigger value="menu" className="text-xs">Meniu & Staff</TabsTrigger>
-          <TabsTrigger value="execution" className="text-xs">Execuție</TabsTrigger>
-          <TabsTrigger value="financial" className="text-xs">Financiar</TabsTrigger>
+      <Tabs defaultValue="client">
+        <TabsList className="bg-transparent border-b border-border rounded-none p-0 h-auto gap-0">
+          {[
+            { value: "client", label: "Date client" },
+            { value: "contract", label: "Ofertă & Contract" },
+            { value: "menu", label: "Meniu & Staff" },
+            { value: "execution", label: "Execuție" },
+            { value: "financial", label: "Financiar" },
+          ].map((tab) => (
+            <TabsTrigger
+              key={tab.value}
+              value={tab.value}
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-3 py-2 text-[13px] text-muted-foreground data-[state=active]:text-foreground"
+            >
+              {tab.label}
+            </TabsTrigger>
+          ))}
         </TabsList>
 
-        <TabsContent value="client">
-          <TabClient properties={p} eventId={event.id} lastEditedTime={event.lastEditedTime} />
-        </TabsContent>
-        <TabsContent value="contract">
-          <TabContract properties={p} eventId={event.id} lastEditedTime={event.lastEditedTime} />
-        </TabsContent>
-        <TabsContent value="menu">
-          <TabMenu properties={p} eventId={event.id} lastEditedTime={event.lastEditedTime} />
-        </TabsContent>
-        <TabsContent value="execution">
-          <TabExecution properties={p} eventId={event.id} lastEditedTime={event.lastEditedTime} />
-        </TabsContent>
-        <TabsContent value="financial">
-          <TabFinancial properties={p} />
-        </TabsContent>
+        <div className="pt-4">
+          <TabsContent value="client">
+            <TabClient properties={p} eventId={event.id} lastEditedTime={event.lastEditedTime} />
+          </TabsContent>
+          <TabsContent value="contract">
+            <TabContract properties={p} eventId={event.id} lastEditedTime={event.lastEditedTime} />
+          </TabsContent>
+          <TabsContent value="menu">
+            <TabMenu properties={p} eventId={event.id} lastEditedTime={event.lastEditedTime} />
+          </TabsContent>
+          <TabsContent value="execution">
+            <TabExecution properties={p} eventId={event.id} lastEditedTime={event.lastEditedTime} />
+          </TabsContent>
+          <TabsContent value="financial">
+            <TabFinancial properties={p} />
+          </TabsContent>
+        </div>
       </Tabs>
     </div>
   );
