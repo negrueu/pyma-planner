@@ -130,20 +130,34 @@ export async function getEventStats() {
   return stats;
 }
 
-// --- Events by date range (for calendar) ---
+// --- Events by date range (for calendar) — with pagination ---
 export async function getEventsByDateRange(start: string, end: string) {
-  const response = await queryDB({
-    filter: {
-      and: [
-        { property: "Data evenimentului", date: { on_or_after: start } },
-        { property: "Data evenimentului", date: { on_or_before: end } },
-      ],
-    },
-    sorts: [{ property: "Data evenimentului", direction: "ascending" }],
-    page_size: 100,
-  });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const allResults: any[] = [];
+  let cursor: string | undefined;
+  let hasMore = true;
 
-  return (response.results || [])
+  while (hasMore) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const params: Record<string, any> = {
+      filter: {
+        and: [
+          { property: "Data evenimentului", date: { on_or_after: start } },
+          { property: "Data evenimentului", date: { on_or_before: end } },
+        ],
+      },
+      sorts: [{ property: "Data evenimentului", direction: "ascending" }],
+      page_size: 100,
+    };
+    if (cursor) params.start_cursor = cursor;
+
+    const response = await queryDB(params);
+    allResults.push(...(response.results || []));
+    hasMore = response.has_more;
+    cursor = response.next_cursor;
+  }
+
+  return allResults
     .filter((p: { properties?: unknown }) => p.properties)
     .map(extractEventSummary);
 }
