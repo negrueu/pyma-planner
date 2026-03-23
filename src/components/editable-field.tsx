@@ -61,13 +61,13 @@ function renderReadonly(prop: any, type: string): React.ReactNode {
     case "rich_text": return extract.richText(prop) || dash();
     case "select": {
       const v = extract.select(prop);
-      return v ? <span className="text-[14px] break-words">{v}</span> : dash();
+      return v ? <span className="text-[13px] break-words leading-snug">{v}</span> : dash();
     }
     case "multi_select": {
       const vals = extract.multiSelect(prop);
       return vals.length > 0 ? (
-        <div className="flex flex-wrap gap-1">
-          {vals.map((v) => <NotionBadge key={v}>{v}</NotionBadge>)}
+        <div className="flex flex-wrap gap-1 overflow-hidden">
+          {vals.map((v) => <NotionBadge key={v} className="text-[11px] max-w-full truncate">{v}</NotionBadge>)}
         </div>
       ) : dash();
     }

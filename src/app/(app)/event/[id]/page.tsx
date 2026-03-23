@@ -67,11 +67,28 @@ export default async function EventPage({
         {name2 && <span className="text-muted-foreground font-normal"> &amp; {name2}</span>}
       </h1>
 
-      <div className="flex flex-wrap items-center gap-[6px] mb-6 text-[14px] text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-[6px] mb-2 text-[14px] text-muted-foreground">
         {displayDate && <span>{displayDate}</span>}
         {salon && <NotionBadge style={salonStyles[salon]}>{salon}</NotionBadge>}
         {eventType && <NotionBadge style={eventTypeStyles[eventType]}>{eventType}</NotionBadge>}
         {phase && <NotionBadge style={phaseStyles[phase]}>{phase}</NotionBadge>}
+      </div>
+
+      <div className="flex gap-2 mb-6 print:hidden">
+        <a
+          href={`/event/${id}/print-client`}
+          target="_blank"
+          className="text-[12px] px-2 py-1 rounded border border-border text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+        >
+          🖨️ Print fișă client
+        </a>
+        <a
+          href={`/event/${id}/print-kitchen`}
+          target="_blank"
+          className="text-[12px] px-2 py-1 rounded border border-border text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+        >
+          🍳 Print raport bucătărie
+        </a>
       </div>
 
       <Tabs defaultValue="client">
