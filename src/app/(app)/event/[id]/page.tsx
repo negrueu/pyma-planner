@@ -76,14 +76,14 @@ export default async function EventPage({
 
       <div className="flex gap-2 mb-6 print:hidden">
         <a
-          href={`/event/${id}/print-client`}
+          href={`/api/print-client/${id}`}
           target="_blank"
           className="text-[12px] px-2 py-1 rounded border border-border text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
         >
           🖨️ Print fișă client
         </a>
         <a
-          href={`/event/${id}/print-kitchen`}
+          href={`/api/print-kitchen/${id}`}
           target="_blank"
           className="text-[12px] px-2 py-1 rounded border border-border text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
         >
